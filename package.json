@@ -1,0 +1,8 @@
+{
+	"name": "sfe-quality-assurance",
+	"version": "0.1.0",
+	"main": "index.ts",
+	"repository": "https://github.com/actuallyori/sfe-quality-assurance.git",
+	"author": "actuallyori <actuallyori@gmail.com>",
+	"license": "MIT"
+}
