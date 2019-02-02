@@ -1,5 +1,6 @@
 import { Plugin, RichEmbed } from "jisco";
 import { toHHMMSS, err, check } from "../util/Util";
+import { Message } from "discord.js";
 
 export const base = new Plugin({
 	name: "base",
@@ -9,6 +10,13 @@ export const base = new Plugin({
 			p.client.disgd.user.setActivity("SFE QA | !help", {
 				type: "WATCHING",
 			}),
+		);
+
+		p.client.on(
+			"command",
+			(data: { command: string; message: Message }) => {
+				data.message.delete();
+			},
 		);
 
 		p.command("status", 0, "", (c, m, a) => {

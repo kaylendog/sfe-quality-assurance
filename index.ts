@@ -5,7 +5,9 @@ import { base } from "./plugins/base";
 import { reports } from "./plugins/reports";
 
 new jisco.Client({
-	commands: {},
+	commands: {
+		permissionOverrides: ["210118905006522369"],
+	},
 	debug: "quiet",
 	discord: {},
 	name: "SFE Quality Assurance",
