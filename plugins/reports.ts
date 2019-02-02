@@ -194,7 +194,14 @@ export const reports = new Plugin({
 			},
 		);
 
-		p.command("reports", 0, "[id:number]", (c, m, a) => {
+		p.command(
+			"reports.deny",
+			10,
+			"<id:number> <reason:string...>",
+			(c, m, a) => {},
+		);
+
+		p.command("reports", 10, "[id:number]", (c, m, a) => {
 			console.log(a[0]);
 			if (a[0]) {
 				let report = (p.config as IReportsPluginConfig).issuesToConfirm.find(
