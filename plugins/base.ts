@@ -29,6 +29,18 @@ export const base = new Plugin({
 			);
 		});
 
+		p.command("source", 0, "", async (c, m, a) => {
+			return m.reply(
+				"We are open source! You can find the repo here: https://github.com/actuallyori/sfe-quality-assurance/",
+			);
+		});
+
+		p.command("bug", 0, "", async (c, m, a) => {
+			return m.reply(
+				"Submit issues at https://github.com/actuallyori/sfe-quality-assurance/issues",
+			);
+		});
+
 		p.command("staff", 10, "<user:snowflake>", (c, m, a) => {
 			if (!m.guild.members.get(a[0])) {
 				return m.reply(err(`Could not find user \`${a[0]}\`.`));
