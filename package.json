@@ -4,5 +4,8 @@
 	"main": "index.ts",
 	"repository": "https://github.com/actuallyori/sfe-quality-assurance.git",
 	"author": "actuallyori <actuallyori@gmail.com>",
-	"license": "MIT"
+	"license": "MIT",
+	"devDependencies": {
+		"typescript": "^3.3.3"
+	}
 }

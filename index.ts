@@ -12,7 +12,7 @@ new jisco.Client({
 	discord: {},
 	name: "SFE Quality Assurance",
 	storageStrategy: jisco.StorageStrategies.MongooseStrategy({
-		dbUri: "mongodb://localhost:27017/sfeqa",
+		dbUri: "mongodb://sfeqa:sfeqa123@ds127545.mlab.com:27545/sfe-qa",
 	}),
 })
 	.addPlugin(base)
