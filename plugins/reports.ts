@@ -42,13 +42,15 @@ export const reports = new Plugin({
 						),
 					);
 				}
+				const reportIncrement = p.config.increment;
+
 				m.channel.send(
 					new RichEmbed(c)
 						.setTitle("Report Sumitted")
 						.setDescription(
 							"You have successfully submitted a report. Give us a moment, and we'll get back to you as soon as you can.",
 						)
-						.addField("Report ID", p.config.increment),
+						.addField("Report ID", reportIncrement),
 				);
 
 				const reportMessage = (await (m.guild.channels.get(
@@ -73,25 +75,27 @@ export const reports = new Plugin({
 					submittedAt: Date.now(),
 					message: a.join(" "),
 					embedId: reportMessage.id,
-					id: p.config.increment,
+					id: reportIncrement,
 				});
 
 				reportMessage
 					.createReactionCollector(
 						(v, u) =>
 							(v.emoji.name == "✅" || v.emoji.name == "❎") &&
-							u.id !== p.client.disgd.user.id,
+							u.id !== p.client.user.id &&
+							u.id !== m.author.id,
 					)
 					.on("collect", async (r) => {
 						const iterator = (await r.fetchUsers())
-							.filter((v) =>
-								(m.guild.members.get(
-									v.id,
-								) as GuildMember).roles.find(
-									(v) => v.name !== "QA Team",
-								)
-									? true
-									: false,
+							.filter(
+								(v) =>
+									((m.guild.members.get(
+										v.id,
+									) as GuildMember).roles.find(
+										(v) => v.name !== "QA Team",
+									)
+										? true
+										: false) && v.id !== m.author.id,
 							)
 							.map((u) => {
 								r.remove(u);
@@ -117,13 +121,12 @@ export const reports = new Plugin({
 							const submissionsChannel = m.guild.channels.get(
 								"541187775442190336",
 							) as TextChannel;
+
 							switch (r.emoji.name) {
 								case "✅": {
 									submissionsChannel.send(
 										check(
-											`Report ID \`${
-												p.config.increment
-											}\` was approved.`,
+											`Report ID \`${reportIncrement}\` was approved.`,
 										),
 									);
 
@@ -149,7 +152,7 @@ export const reports = new Plugin({
 									);
 
 									let issue = p.config.issuesToConfirm.find(
-										(v) => v.id === p.config.increment,
+										(v) => v.id === reportIncrement,
 									);
 
 									p.config.issuesToConfirm.splice(
@@ -168,16 +171,14 @@ export const reports = new Plugin({
 								case "❎": {
 									submissionsChannel.send(
 										check(
-											`Report ID \`${
-												p.config.increment
-											}\` was denied.`,
+											`Report ID \`${reportIncrement}\` was denied.`,
 										),
 									);
 
 									reportMessage.delete();
 
 									let issue = p.config.issuesToConfirm.find(
-										(v) => v.id === p.config.increment,
+										(v) => v.id === reportIncrement,
 									);
 									p.config.issuesToConfirm.splice(
 										p.config.issuesToConfirm.indexOf(issue),
