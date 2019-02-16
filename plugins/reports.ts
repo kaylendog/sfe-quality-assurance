@@ -43,6 +43,7 @@ export const reports = new Plugin({
 					);
 				}
 				const reportIncrement = p.config.increment;
+				m.deletable ? m.delete() : null;
 
 				m.channel.send(
 					new RichEmbed(c)
